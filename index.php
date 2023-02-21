@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        #showc{
+            color: red;
+        }
+        #showf{
+            color: blue;
+        }
+    </style>
   <title>Weather</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,8 +58,7 @@ curl_setopt_array($curl, [
 	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 	CURLOPT_CUSTOMREQUEST => "GET",
 	CURLOPT_HTTPHEADER => [
-		"X-RapidAPI-Host: weatherapi-com.p.rapidapi.com",
-		"X-RapidAPI-Key: 10101010"
+		
 	],
 ]);
 
@@ -76,25 +83,46 @@ echo '</h1></header>';
 
 // main section current weather
 $current= $decoded_json['current']['temp_c'];
+$currentf= $decoded_json['current']['temp_f'];
+$feelslike= $decoded_json['current']['feelslike_c'];
+$feelslikef= $decoded_json['current']['feelslike_f'];
 $currentcondition= $decoded_json['current']['condition']['text'];
 $currenticon= $decoded_json['current']['condition']['icon'];
-
+$lastupdated = $decoded_json['current']['last_updated'];
 
 echo '<main>';
-echo '<div class="currenttemp">';
+echo '<div class="currenttemp"><span id="showc">';
 echo $current;
-echo '<sup>o</sup> C</div>'; // end currenttemp
+echo '<sup>o</sup> C</span><span id="showf">';
+echo $currentf;
+echo '<sup>o</sup> F</span>';
+echo '<span class="feelslike"> Feels like '; 
+echo '<span id="showc"> ';
+echo $feelslike;
+echo '<sup>o</sup> C</span><span id="showf"> ';
+echo $feelslikef;
+echo '<sup>o</sup> F</span>';
+echo '</span></div>'; // end currenttemp
 echo '<div class="currentcondition">';
 echo '<img src="'. $currenticon .'">';
 echo '<span class="condition">';
 echo $currentcondition;
 echo '</span>';
-
+echo '<span class="lastupdated">';
+echo 'Last updated';
+echo $lastupdated;
+echo '</span>';
 echo '</div>'; // current condition
 
 // stats 
 echo '<div class="row" id="stats">';
     echo '<div class="col-sm-4">';
+    
+    echo '</div>';
+        echo '<div class="col-sm-4">';
+    
+    echo '</div>';
+        echo '<div class="col-sm-4">';
     
     echo '</div>';
 echo '</div>'; // stats
